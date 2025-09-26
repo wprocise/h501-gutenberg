@@ -1,2 +1,8 @@
-pandas
-seaborn
+name: <h501-gutenberg/week-4>
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+    - ipykernel
+    - pandas
+    - seaborn
