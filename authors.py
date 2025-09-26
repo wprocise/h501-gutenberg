@@ -29,5 +29,4 @@ def list_authors(gutenberg_languages=False, alias=False):
         return grouped
 
     return results
-]
 
