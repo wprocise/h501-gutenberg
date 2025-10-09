@@ -1,5 +1,5 @@
 # tt_gutenberg/authors.py
-from .data_utils import load_data, clean_alias_data
+from utils import load_data, clean_alias_data
 
 def list_aliases_by_translation_count(csv_path: str) -> list: 
     """

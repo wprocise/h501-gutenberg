@@ -1,4 +1,4 @@
-# tt_gutenberg/data_utils.py
+# tt_gutenberg/utils.py
 import pandas as pd
 
 def load_data(csv_path: str) -> pd.DataFrame:
