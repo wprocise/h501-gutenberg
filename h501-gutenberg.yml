@@ -1,4 +1,4 @@
-name: <h501-gutenberg/week-4>
+name: h501-gutenberg
 dependencies:
   - python=3.12
   - pip

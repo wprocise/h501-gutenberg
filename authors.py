@@ -27,6 +27,6 @@ def list_authors(gutenberg_languages=False, alias=False):
                 clean_name(a["alias"]) if alias and a.get("alias") else clean_name(a["name"])
             )
         return grouped
-
+    
     return results
 
