@@ -1,32 +1,21 @@
-# authors.py file
-from tt_gutenberg.utils import clean_name 
+# tt_gutenberg/authors.py
+from .data_utils import load_data, clean_alias_data
 
-gutenberg_authors = [
-    {"name": "Mark Twain", "alias": "Samuel Clemens", "language": "English"},
-    {"name": "J.K. Rowling", "alias": "Robert Galbraith", "language": "English"},
-    {"name": "Victor Hugo", "alias": None, "language": "French"},
-]
-
-def list_authors(gutenberg_languages=False, alias=False):
+def list_aliases_by_translation_count(csv_path: str) -> list: 
     """
-    List authors, optionally grouped by language or showing aliases.
+    Return a list of author aliases ordered by translation count (descending).
     """
-    results = []
+    df = load_data(csv_path)
+    df = clean_alias_data(df)
 
-    for a in gutenberg_authors:
-        if alias and a.get("alias"):
-            results.append(clean_name(a["alias"]))
-        else:
-            results.append(clean_name(a["name"]))
+    if 'n_translated' not in df.columns or 'alias' not in df.columns:
+        raise ValueError("Dataset must contain 'alias' and 'n_translated' columns")
 
-    if gutenberg_authors:
-        grouped = {}
-        for a in gutenberg_authors:
-            lang = a["language"]
-            grouped.setdefault(lang, []).append(
-                clean_name(a["alias"]) if alias and a.get("alias") else clean_name(a["name"])
-            )
-        return grouped
-    
-    return results
+    sorted_aliases = (
+        df.sort_values('n_translated', ascending=False)['alias'].tolist()
+    )
+
+    return sorted_aliases
+
+
 
