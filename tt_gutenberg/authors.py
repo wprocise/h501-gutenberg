@@ -1,21 +1,21 @@
-# tt_gutenberg/authors.py
-from utils import load_data, clean_alias_data
+# authors.py
+from .utils import load_gutenberg_dataset, clean_aliases
 
-def list_aliases_by_translation_count(csv_path: str) -> list: 
+def list_authors(by_languages=False, alias=True, path="data/gutenberg.csv"):
     """
-    Return a list of author aliases ordered by translation count (descending).
+    Return a list of author aliases sorted by translation count.
     """
-    df = load_data(csv_path)
-    df = clean_alias_data(df)
+    df = load_gutenberg_dataset(path)
+    
+    # Keep only aliases
+    authors = clean_aliases(df)
+    
+    if by_languages:
+        # Sort by translation count (descending)
+        return authors.value_counts().index.tolist()
+    else:
+        return authors.unique().tolist()
 
-    if 'n_translated' not in df.columns or 'alias' not in df.columns:
-        raise ValueError("Dataset must contain 'alias' and 'n_translated' columns")
-
-    sorted_aliases = (
-        df.sort_values('n_translated', ascending=False)['alias'].tolist()
-    )
-
-    return sorted_aliases
 
 
 

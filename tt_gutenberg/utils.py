@@ -1,13 +1,17 @@
-# tt_gutenberg/utils.py
+# utils.py
 import pandas as pd
 
-def load_data(csv_path: str) -> pd.DataFrame:
-    """Load the Project Gutenberg author dataset as a DataFrame."""
-    return pd.read_csv(csv_path)
+def load_gutenberg_dataset(path="data/gutenberg.csv"):
+    """
+    Load the TidyTuesday Gutenberg dataset.
+    Returns a pandas DataFrame.
+    """
+    return pd.read_csv(path)
 
-def clean_alias_data(df: pd.DataFrame) -> pd.DataFrame:
-    """Remove rows with missing or non-string aliases."""
-    df = df.dropna(subset=['alias', 'n_translated'])
-    df = df[df['alias'].apply(lambda x: isinstance(x, str) and x.strip() != "")]
-    return df
+def clean_aliases(df, alias_col="alias"):
+    """
+    Keep only non-empty, non-NA aliases.
+    """
+    return df[df[alias_col].notna()][alias_col]
+
 
